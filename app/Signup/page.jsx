@@ -1,25 +1,57 @@
 "use client"
 
 import { useState } from 'react'
+import { Orbitron } from 'next/font/google'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from "framer-motion"
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { User, Mail, Lock, ArrowRight } from 'lucide-react'
+import { auth } from '@/lib/firebase'
+import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+
+const orbitron = Orbitron({ subsets: ['latin'] })
 
 const SignUp = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   })
   const [focusedField, setFocusedField] = useState(null)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Handle form submission
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+  
+    const collegeDomain = "@srmist.edu.in";
+  
+    if (!formData.email.endsWith(collegeDomain)) {
+      setError("Please use your official college email address (@srmist.edu.in)");
+      toast.error("Please use your official college email address");
+      return;
+    }
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      toast.success("Account created successfully!");
+      setTimeout(() => {
+        router.push('/Dashboard');
+      }, 2000);
+    } catch (error) {
+      setError(error.message.replace('Firebase:', ''));
+      toast.error(error.message.replace('Firebase:', ''));
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black flex flex-col items-center justify-center p-4">
@@ -39,7 +71,7 @@ const SignUp = () => {
             className="w-full h-full object-contain"
           />
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-emerald-600 font-serif">
+        <h1 className={`text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-emerald-600 tracking-wider ${orbitron.className}`}>
           UniLib
         </h1>
       </motion.div>
@@ -50,6 +82,16 @@ const SignUp = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 mb-6 text-red-200 text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <motion.div 
             className={`relative group ${focusedField === 'name' ? 'scale-105' : ''}`}
@@ -111,7 +153,6 @@ const SignUp = () => {
             </div>
           </motion.div>
 
-          {/* Replace the navigation buttons with a single Register button */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

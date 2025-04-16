@@ -6,17 +6,36 @@ import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import { motion } from "framer-motion"
 import { Mail, Lock, ArrowRight } from 'lucide-react'
+import { Orbitron } from 'next/font/google'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
+import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+const orbitron = Orbitron({ subsets: ['latin'] })
 
 const Login = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
   const [focusedField, setFocusedField] = useState(null)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle login submission
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      toast.success("Login Successful! Welcome back!");
+      setTimeout(() => {
+        router.push('/Dashboard')
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message.replace('Firebase:', ''));
+    }
   }
 
   return (
@@ -28,7 +47,7 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-emerald-600">
+        <h1 className={`text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-emerald-600 tracking-wider ${orbitron.className}`}>
           Welcome Back
         </h1>
       </motion.div>
