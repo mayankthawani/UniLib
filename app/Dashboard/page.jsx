@@ -9,19 +9,22 @@ import { cn } from "@/lib/utils"
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[#0A0A0A]">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-emerald-950 to-gray-900">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient Orbs */}
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
+        {/* Animated gradient spheres */}
+        <div className="absolute top-0 -left-4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob" />
+        <div className="absolute top-1/4 -right-4 w-96 h-96 bg-teal-400 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-green-400 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-4000" />
         
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#080808_1px,transparent_1px),linear-gradient(to_bottom,#080808_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+        {/* Shimmer effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(17,24,39,0),rgba(17,24,39,1))] opacity-70" />
+        
+        {/* Grid overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
-      {/* Content Container with Glass Effect */}
+      {/* Content Container */}
       <div className="relative z-10">
         {/* Header - updated with stronger glass effect */}
         <header className="fixed top-0 w-full bg-black/30 backdrop-blur-xl border-b border-white/5 z-50">
@@ -40,30 +43,69 @@ const Dashboard = () => {
         </header>
 
         <main className="pt-20 px-4 pb-24">
-          {/* Quick Actions - updated with glass morphism */}
+          {/* Quick Actions Section */}
           <section className="mb-8">
             <h2 className="text-lg font-semibold mb-4 text-emerald-400">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { title: 'Check Seats', icon: Users, color: 'emerald', desc: 'Find empty seats' },
-                { title: 'Find Books', icon: Search, color: 'blue', desc: 'Search collection' },
-                { title: 'My Books', icon: BookOpen, color: 'purple', desc: 'View borrowed' },
-                { title: 'Library Map', icon: MapPin, color: 'pink', desc: 'Navigate floors' },
+                { 
+                  title: 'Check Seats', 
+                  icon: Users, 
+                  gradient: 'from-emerald-500/20 via-emerald-500/10 to-transparent',
+                  iconGradient: 'from-emerald-400 to-teal-300',
+                  desc: 'Find empty seats',
+                  border: 'border-emerald-500/20'
+                },
+                { 
+                  title: 'Find Books', 
+                  icon: Search, 
+                  gradient: 'from-teal-500/20 via-teal-500/10 to-transparent',
+                  iconGradient: 'from-teal-400 to-emerald-300',
+                  desc: 'Search collection',
+                  border: 'border-teal-500/20'
+                },
+                { 
+                  title: 'My Books', 
+                  icon: BookOpen, 
+                  gradient: 'from-emerald-400/20 via-emerald-400/10 to-transparent',
+                  iconGradient: 'from-emerald-300 to-teal-400',
+                  desc: 'View borrowed',
+                  border: 'border-emerald-400/20'
+                },
+                { 
+                  title: 'Library Map', 
+                  icon: MapPin, 
+                  gradient: 'from-teal-400/20 via-teal-400/10 to-transparent',
+                  iconGradient: 'from-teal-300 to-emerald-400',
+                  desc: 'Navigate floors',
+                  border: 'border-teal-400/20'
+                },
               ].map((item, i) => (
                 <motion.button
                   key={i}
-                  whileHover={{ scale: 1.02, backgroundColor: "rgba(20, 20, 20, 0.8)" }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={cn(
-                    "flex flex-col items-start p-4 rounded-2xl",
-                    "bg-black/20 backdrop-blur-xl border border-white/5",
-                    "hover:border-emerald-500/20 transition-all duration-200",
-                    "shadow-[0_0_1px_1px_rgba(0,0,0,0.1)]"
+                    "flex flex-col items-start p-5 rounded-2xl relative overflow-hidden group card-hover-effect",
+                    "bg-gray-950/50 backdrop-blur-xl",
+                    `border ${item.border}`,
+                    "transition-all duration-300"
                   )}
                 >
-                  <item.icon className="w-6 h-6 mb-3 text-emerald-400" />
-                  <h3 className="text-sm font-medium mb-1">{item.title}</h3>
-                  <p className="text-xs text-gray-400">{item.desc}</p>
+                  <div className={cn(
+                    "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                    `bg-gradient-to-br ${item.gradient}`
+                  )} />
+                  <div className="relative z-10 w-full">
+                    <div className={cn(
+                      "bg-gradient-to-br w-12 h-12 rounded-xl flex items-center justify-center mb-4",
+                      item.iconGradient
+                    )}>
+                      <item.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-base font-semibold mb-1 text-white/90">{item.title}</h3>
+                    <p className="text-xs text-emerald-300/70">{item.desc}</p>
+                  </div>
                 </motion.button>
               ))}
             </div>
