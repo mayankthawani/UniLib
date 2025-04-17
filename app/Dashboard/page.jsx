@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { BookOpen, MapPin, Search, Users, Home, Menu, Map, ChevronRight } from 'lucide-react'
 import { cn } from "@/lib/utils"
+import Link from 'next/link'
 
 const Dashboard = () => {
   return (
@@ -54,7 +55,8 @@ const Dashboard = () => {
                   gradient: 'from-emerald-500/20 via-emerald-500/10 to-transparent',
                   iconGradient: 'from-emerald-400 to-teal-300',
                   desc: 'Find empty seats',
-                  border: 'border-emerald-500/20'
+                  border: 'border-emerald-500/20',
+                  link: '/seats'
                 },
                 { 
                   title: 'Find Books', 
@@ -62,7 +64,8 @@ const Dashboard = () => {
                   gradient: 'from-teal-500/20 via-teal-500/10 to-transparent',
                   iconGradient: 'from-teal-400 to-emerald-300',
                   desc: 'Search collection',
-                  border: 'border-teal-500/20'
+                  border: 'border-teal-500/20',
+                  link: '/Searchbooks'
                 },
                 { 
                   title: 'My Books', 
@@ -70,7 +73,9 @@ const Dashboard = () => {
                   gradient: 'from-emerald-400/20 via-emerald-400/10 to-transparent',
                   iconGradient: 'from-emerald-300 to-teal-400',
                   desc: 'View borrowed',
-                  border: 'border-emerald-400/20'
+                  border: 'border-emerald-400/20',
+                  link: '/Mybooks'
+                 
                 },
                 { 
                   title: 'Library Map', 
@@ -78,35 +83,37 @@ const Dashboard = () => {
                   gradient: 'from-teal-400/20 via-teal-400/10 to-transparent',
                   iconGradient: 'from-teal-300 to-emerald-400',
                   desc: 'Navigate floors',
-                  border: 'border-teal-400/20'
+                  border: 'border-teal-400/20',
+                  link: '/map'
                 },
               ].map((item, i) => (
-                <motion.button
-                  key={i}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={cn(
-                    "flex flex-col items-start p-6 rounded-2xl relative overflow-hidden group card-hover-effect",
-                    "bg-gray-950/50 backdrop-blur-xl",
-                    `border ${item.border}`,
-                    "transition-all duration-300"
-                  )}
-                >
-                  <div className={cn(
-                    "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-                    `bg-gradient-to-br ${item.gradient}`
-                  )} />
-                  <div className="relative z-10 w-full">
+                <Link href={item.link} key={i}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={cn(
+                      "flex flex-col items-start p-6 rounded-2xl relative overflow-hidden group card-hover-effect",
+                      "bg-gray-950/50 backdrop-blur-xl",
+                      `border ${item.border}`,
+                      "transition-all duration-300 w-full"
+                    )}
+                  >
                     <div className={cn(
-                      "bg-gradient-to-br w-16 h-16 rounded-xl flex items-center justify-center mb-4",
-                      item.iconGradient
-                    )}>
-                      <item.icon className="w-8 h-8 text-white" />
+                      "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                      `bg-gradient-to-br ${item.gradient}`
+                    )} />
+                    <div className="relative z-10 w-full">
+                      <div className={cn(
+                        "bg-gradient-to-br w-16 h-16 rounded-xl flex items-center justify-center mb-4",
+                        item.iconGradient
+                      )}>
+                        <item.icon className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold mb-2 text-white/90">{item.title}</h3>
+                      <p className="text-sm text-emerald-300/70">{item.desc}</p>
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-white/90">{item.title}</h3>
-                    <p className="text-sm text-emerald-300/70">{item.desc}</p>
-                  </div>
-                </motion.button>
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </section>
