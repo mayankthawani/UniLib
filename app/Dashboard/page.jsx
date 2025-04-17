@@ -26,27 +26,27 @@ const Dashboard = () => {
 
       {/* Content Container */}
       <div className="relative z-10">
-        {/* Header - updated with stronger glass effect */}
+        {/* Mobile-optimized header */}
         <header className="fixed top-0 w-full bg-black/30 backdrop-blur-xl border-b border-white/5 z-50">
-          <div className="flex items-center justify-between p-4">
+          <div className="flex items-center justify-between p-5">
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="UniLib Logo" width={32} height={32} className="rounded-full" />
-              <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-600 text-transparent bg-clip-text">
+              <Image src="/logo.png" alt="UniLib Logo" width={40} height={40} className="rounded-full" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-600 text-transparent bg-clip-text">
                 UniLib
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-gray-900/50 px-3 py-1.5 rounded-full">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-sm text-emerald-100">Mayank</span>
+            <div className="flex items-center gap-2 bg-gray-900/50 px-4 py-2 rounded-full">
+              <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+              <span className="text-base text-emerald-100">Mayank</span>
             </div>
           </div>
         </header>
 
-        <main className="pt-20 px-4 pb-24">
-          {/* Quick Actions Section */}
+        <main className="pt-24 px-5 pb-28">
+          {/* Enlarged Quick Actions */}
           <section className="mb-8">
-            <h2 className="text-lg font-semibold mb-4 text-emerald-400">Quick Actions</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <h2 className="text-xl font-semibold mb-5 text-emerald-400">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-4">
               {[
                 { 
                   title: 'Check Seats', 
@@ -86,7 +86,7 @@ const Dashboard = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={cn(
-                    "flex flex-col items-start p-5 rounded-2xl relative overflow-hidden group card-hover-effect",
+                    "flex flex-col items-start p-6 rounded-2xl relative overflow-hidden group card-hover-effect",
                     "bg-gray-950/50 backdrop-blur-xl",
                     `border ${item.border}`,
                     "transition-all duration-300"
@@ -98,13 +98,13 @@ const Dashboard = () => {
                   )} />
                   <div className="relative z-10 w-full">
                     <div className={cn(
-                      "bg-gradient-to-br w-12 h-12 rounded-xl flex items-center justify-center mb-4",
+                      "bg-gradient-to-br w-16 h-16 rounded-xl flex items-center justify-center mb-4",
                       item.iconGradient
                     )}>
-                      <item.icon className="w-6 h-6 text-white" />
+                      <item.icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-base font-semibold mb-1 text-white/90">{item.title}</h3>
-                    <p className="text-xs text-emerald-300/70">{item.desc}</p>
+                    <h3 className="text-lg font-semibold mb-2 text-white/90">{item.title}</h3>
+                    <p className="text-sm text-emerald-300/70">{item.desc}</p>
                   </div>
                 </motion.button>
               ))}
@@ -150,9 +150,9 @@ const Dashboard = () => {
           </section>
         </main>
 
-        {/* Navigation - updated with stronger glass effect */}
+        {/* Enlarged Bottom Navigation */}
         <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
-          <div className="flex justify-around items-center py-2">
+          <div className="flex justify-around items-center py-4">
             {[
               { icon: Home, label: 'Home' },
               { icon: Users, label: 'Seats' },
@@ -163,10 +163,10 @@ const Dashboard = () => {
               <motion.button
                 key={i}
                 whileTap={{ scale: 0.9 }}
-                className="flex flex-col items-center py-1 px-3"
+                className="flex flex-col items-center py-1 px-4"
               >
-                <item.icon className="w-5 h-5 mb-1 text-gray-400" />
-                <span className="text-[10px] text-gray-400">{item.label}</span>
+                <item.icon className="w-7 h-7 mb-2 text-gray-400" />
+                <span className="text-xs text-gray-400">{item.label}</span>
               </motion.button>
             ))}
           </div>
