@@ -8,6 +8,7 @@ import { BookOpen, MapPin, Search, Users, Home, Menu, Map, ChevronRight } from '
 import { cn } from "@/lib/utils"
 import Link from 'next/link'
 
+
 const Dashboard = () => {
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-emerald-950 to-gray-900">
@@ -158,26 +159,31 @@ const Dashboard = () => {
         </main>
 
         {/* Enlarged Bottom Navigation */}
-        <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
-          <div className="flex justify-around items-center py-4">
-            {[
-              { icon: Home, label: 'Home' },
-              { icon: Users, label: 'Seats' },
-              { icon: BookOpen, label: 'Books' },
-              { icon: Map, label: 'Map' },
-              { icon: Menu, label: 'More' },
-            ].map((item, i) => (
-              <motion.button
-                key={i}
-                whileTap={{ scale: 0.9 }}
-                className="flex flex-col items-center py-1 px-4"
-              >
-                <item.icon className="w-7 h-7 mb-2 text-gray-400" />
-                <span className="text-xs text-gray-400">{item.label}</span>
-              </motion.button>
-            ))}
-          </div>
-        </nav>
+         <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
+                  <div className="flex justify-around items-center py-4">
+                    {[
+                      { icon: Home, label: 'Home', link:'/Dashboard' },
+                      { icon: Users, label: 'Seats', link:'/seats' },
+                      { icon: BookOpen, label: 'Books', link:'Mybooks' },
+                      { icon: Search, label: 'Search' , link:'/Searchbooks' },
+        
+                      { icon: Map, label: 'Map', link:'/Library-map' },
+                     
+                    ].map((item, i) => (
+                      <Link href={item.link} key={i}>
+        
+                      <motion.button
+                        key={i}
+                        whileTap={{ scale: 0.9 }}
+                        className="flex flex-col items-center py-1 px-4"
+                      >
+                        <item.icon className="w-7 h-7 mb-2 text-gray-400" />
+                        <span className="text-xs text-gray-400">{item.label}</span>
+                      </motion.button>
+                      </Link>
+                    ))}
+                  </div>
+                </nav>
       </div>
     </div>
   )

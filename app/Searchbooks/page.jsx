@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { motion } from "framer-motion"
 import { Search, BookOpen, ArrowLeft } from 'lucide-react'
 import { Input } from "@/components/ui/input"
+import { Home, Users, Map } from 'lucide-react'
+import Link from 'next/link'
+
 
 const SearchBooks = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -85,6 +88,31 @@ const SearchBooks = () => {
           )}
         </div>
       </main>
+      <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
+          <div className="flex justify-around items-center py-4">
+            {[
+              { icon: Home, label: 'Home', link:'/Dashboard' },
+              { icon: Users, label: 'Seats', link:'/seats' },
+              { icon: BookOpen, label: 'Books', link:'Mybooks' },
+              { icon: Search, label: 'Search' , link:'/Searchbooks' },
+
+              { icon: Map, label: 'Map', link:'/Library-map' },
+             
+            ].map((item, i) => (
+              <Link href={item.link} key={i}>
+
+              <motion.button
+                key={i}
+                whileTap={{ scale: 0.9 }}
+                className="flex flex-col items-center py-1 px-4"
+              >
+                <item.icon className="w-7 h-7 mb-2 text-gray-400" />
+                <span className="text-xs text-gray-400">{item.label}</span>
+              </motion.button>
+              </Link>
+            ))}
+          </div>
+        </nav>
     </div>
   )
 }

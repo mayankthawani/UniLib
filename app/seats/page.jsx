@@ -3,7 +3,9 @@
 import React, { useState } from 'react'
 import { motion } from "framer-motion"
 import Image from 'next/image'
-import { Users } from 'lucide-react'
+import Link from 'next/link'  // Fixed import
+import { Users, BookOpen, Search, Home, Map } from 'lucide-react'
+import { Button } from "@/components/ui/button"
 
 const SeatsPage = () => {
   const [selectedFloor, setSelectedFloor] = useState(1)
@@ -102,6 +104,24 @@ const SeatsPage = () => {
           </motion.div>
         ))}
       </main>
+      <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
+        <div className="flex justify-around items-center py-4">
+          {[
+            { icon: Home, label: 'Home', href: '/Dashboard' },
+            { icon: Users, label: 'Seats', href: '/seats' },
+            { icon: BookOpen, label: 'Books', href: '/Mybooks' },
+            { icon: Search, label: 'Search', href: '/Searchbooks' },
+            { icon: Map, label: 'Map', href: '/map' },
+          ].map((item, i) => (
+            <Link href={item.href} key={i}>
+              <div className="flex flex-col items-center py-1 px-4">
+                <item.icon className="w-7 h-7 mb-2 text-gray-400" />
+                <span className="text-xs text-gray-400">{item.label}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </nav>
     </div>
   )
 }

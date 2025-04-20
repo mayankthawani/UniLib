@@ -3,8 +3,10 @@
 import React from 'react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
-import { BookOpen, CalendarDays, AlertCircle } from 'lucide-react'
+import { BookOpen, CalendarDays, AlertCircle, Search } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { Home, Users, Map, Menu } from 'lucide-react'
+import Link from 'next/link'
 
 const MyBooks = () => {
   // Mock data - replace with actual data from your backend
@@ -109,6 +111,32 @@ const MyBooks = () => {
           )}
         </div>
       </main>
+      <nav className="fixed bottom-0 w-full bg-black/30 backdrop-blur-xl border-t border-white/5">
+          <div className="flex justify-around items-center py-4">
+            {[
+              { icon: Home, label: 'Home', link:'/Dashboard' },
+              { icon: Users, label: 'Seats', link:'/seats' },
+              { icon: BookOpen, label: 'Books', link:'Mybooks' },
+              { icon: Search, label: 'Search' , link:'/Searchbooks' },
+
+              { icon: Map, label: 'Map', link:'/Library-map' },
+             
+            ].map((item, i) => (
+              <Link href={item.link} key={i}>
+
+              <motion.button
+                key={i}
+                whileTap={{ scale: 0.9 }}
+                className="flex flex-col items-center py-1 px-4"
+              >
+                <item.icon className="w-7 h-7 mb-2 text-gray-400" />
+                <span className="text-xs text-gray-400">{item.label}</span>
+              </motion.button>
+              </Link>
+            ))}
+          </div>
+        </nav>
+      
     </div>
   )
 }
