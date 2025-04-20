@@ -84,7 +84,7 @@ const Dashboard = () => {
                   iconGradient: 'from-teal-300 to-emerald-400',
                   desc: 'Navigate floors',
                   border: 'border-teal-400/20',
-                  link: '/map'
+                  link: '/Library-map'
                 },
               ].map((item, i) => (
                 <Link href={item.link} key={i}>
